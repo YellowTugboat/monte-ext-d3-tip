@@ -1,6 +1,6 @@
 {
   "name": "monte-ext-d3-tip",
-  "version": "0.0.0-preview",
+  "version": "0.0.0-alpha22",
   "description": "Monte extension for the d3-tip library.",
   "main": "build/monte-ext-d3-tip.js",
   "scripts": {
