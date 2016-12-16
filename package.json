@@ -1,6 +1,6 @@
 {
   "name": "monte-ext-d3-tip",
-  "version": "0.0.0-alpha22",
+  "version": "0.0.0-alpha23",
   "description": "Monte extension for the d3-tip library.",
   "main": "build/monte-ext-d3-tip.js",
   "scripts": {
@@ -31,13 +31,13 @@
   },
   "homepage": "https://github.com/YellowTugboat/monte-ext-d3-tip#readme",
   "devDependencies": {
-    "babel-cli": "^6.14.0",
-    "babel-plugin-lodash": "^3.2.9",
-    "babel-preset-es2015-rollup": "^1.2.0",
-    "eslint": "^3.6.0",
-    "eslint-config-yellow-tugboat": "^0.1.0",
+    "babel-cli": "^6.18.0",
+    "babel-plugin-lodash": "^3.2.10",
+    "babel-preset-es2015-rollup": "^3.0.0",
+    "eslint": "^3.12.0",
+    "eslint-config-yellow-tugboat": "^0.2.0",
     "nodemon": "^1.10.2",
-    "rollup": "^0.36",
+    "rollup": "^0.37",
     "rollup-plugin-babel": "^2",
     "rollup-plugin-node-resolve": "^2.0.0",
     "rollup-plugin-uglify": "^1.0.1",
@@ -45,7 +45,13 @@
     "tape-run": "^2.1.4"
   },
   "peerDependencies": {
-    "monte": "^0.0.0-alpha22",
+    "monte": "^0.0.0-alpha23",
     "d3-tip": "^0.7.0"
+  },
+  "dependencies": {
+    "nodemon": "^1.11.0",
+    "rollup": "^0.36.4",
+    "rollup-plugin-babel": "^2.7.1",
+    "tape": "^4.6.3"
   }
 }

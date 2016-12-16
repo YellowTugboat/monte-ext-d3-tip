@@ -9,7 +9,7 @@ module.exports = {
   },
   'globals': {
     'd3': true,
-    'Monte': true,
+    'monte': true,
   },
   'rules': {
     'sort-imports': 'error'

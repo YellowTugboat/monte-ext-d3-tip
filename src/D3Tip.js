@@ -1,6 +1,6 @@
-const isFunc = Monte.tools.isFunc;
-const isNumeric = Monte.tools.isNumeric;
-const isObject = Monte.tools.isObject;
+const isFunc = monte.tools.isFunc;
+const isNumeric = monte.tools.isNumeric;
+const isObject = monte.tools.isObject;
 
 const TIP_DEFAULTS = {
   eventPrefix: 'd3tip',
@@ -13,13 +13,13 @@ const TIP_DEFAULTS = {
   hideEvents: ['mouseout'],
 };
 
-export class D3Tip extends Monte.Extension {
+export class D3Tip extends monte.Extension {
   _initOptions(...options) {
     super._initOptions(...options, TIP_DEFAULTS);
 
     // Throw option error if `featurePrefix` is left blank
     if (!this.opts.featurePrefix) {
-      throw Monte.MonteOptionError.RequiredOption('featurePrefix');
+      throw monte.MonteOptionError.RequiredOption('featurePrefix');
     }
   }
 
@@ -36,7 +36,7 @@ export class D3Tip extends Monte.Extension {
       .html(html);
 
     if (!isFunc(html)) {
-      throw new Monte.MonteOptionError(`Check the "html" option value. A function is expected. Received: ${html}`);
+      throw new monte.MonteOptionError(`Check the "html" option value. A function is expected. Received: ${html}`);
     }
 
     if (isObject(offset)) {
@@ -50,7 +50,7 @@ export class D3Tip extends Monte.Extension {
       tip.offset([+offset, 0]);
     }
     else {
-      throw new Monte.MonteOptionError(`Check the "offset" option value. A function, object, or number is expected. Received: ${offset}`);
+      throw new monte.MonteOptionError(`Check the "offset" option value. A function, object, or number is expected. Received: ${offset}`);
     }
 
     this.chart.bound.call(tip);

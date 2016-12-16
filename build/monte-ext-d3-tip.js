@@ -1,7 +1,7 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
-  (factory((global.MonteExtD3Tip = global.MonteExtD3Tip || {})));
+  (factory((global.monteExtD3Tip = global.monteExtD3Tip || {})));
 }(this, (function (exports) { 'use strict';
 
 var classCallCheck = function (instance, Constructor) {
@@ -117,9 +117,9 @@ var set = function set(object, property, value, receiver) {
   return value;
 };
 
-var isFunc = Monte.tools.isFunc;
-var isNumeric = Monte.tools.isNumeric;
-var isObject = Monte.tools.isObject;
+var isFunc = monte.tools.isFunc;
+var isNumeric = monte.tools.isNumeric;
+var isObject = monte.tools.isObject;
 
 var TIP_DEFAULTS = {
   eventPrefix: 'd3tip',
@@ -134,8 +134,8 @@ var TIP_DEFAULTS = {
   hideEvents: ['mouseout']
 };
 
-var D3Tip = function (_Monte$Extension) {
-  inherits(D3Tip, _Monte$Extension);
+var D3Tip = function (_monte$Extension) {
+  inherits(D3Tip, _monte$Extension);
 
   function D3Tip() {
     classCallCheck(this, D3Tip);
@@ -155,7 +155,7 @@ var D3Tip = function (_Monte$Extension) {
 
       // Throw option error if `featurePrefix` is left blank
       if (!this.opts.featurePrefix) {
-        throw Monte.MonteOptionError.RequiredOption('featurePrefix');
+        throw monte.MonteOptionError.RequiredOption('featurePrefix');
       }
     }
   }, {
@@ -173,7 +173,7 @@ var D3Tip = function (_Monte$Extension) {
       var tip = d3.tip().attr('class', css).direction(dir).html(html);
 
       if (!isFunc(html)) {
-        throw new Monte.MonteOptionError('Check the "html" option value. A function is expected. Received: ' + html);
+        throw new monte.MonteOptionError('Check the "html" option value. A function is expected. Received: ' + html);
       }
 
       if (isObject(offset)) {
@@ -182,7 +182,7 @@ var D3Tip = function (_Monte$Extension) {
         // If a single number is provided assume that only a vertical shift is intended.
         tip.offset([+offset, 0]);
       } else {
-        throw new Monte.MonteOptionError('Check the "offset" option value. A function, object, or number is expected. Received: ' + offset);
+        throw new monte.MonteOptionError('Check the "offset" option value. A function, object, or number is expected. Received: ' + offset);
       }
 
       this.chart.bound.call(tip);
@@ -209,7 +209,7 @@ var D3Tip = function (_Monte$Extension) {
     }
   }]);
   return D3Tip;
-}(Monte.Extension);
+}(monte.Extension);
 
 exports.ExtD3Tip = D3Tip;
 
