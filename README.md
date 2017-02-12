@@ -5,4 +5,4 @@ Use [D3Tip](https://github.com/Caged/d3-tip) as a tooltip provider for Monte cha
 MIT. See LICENSE for details.
 
 # Author
-Yellow Tugboat. Copyright © 2016.
+Yellow Tugboat. Copyright © 2016-2017.
