@@ -1,6 +1,4 @@
-const isFunc = monte.tools.isFunc;
-const isNumeric = monte.tools.isNumeric;
-const isObject = monte.tools.isObject;
+const { isFunc, isNumeric, isObject, isArray } = monte.tools;
 
 const TIP_DEFAULTS = {
   eventPrefix: 'd3tip',
@@ -8,9 +6,11 @@ const TIP_DEFAULTS = {
   direction: 'n',
   offset: {},
   html: (d, i) => d.value || d || i,
-  featurePrefix: null,
-  showEvents: ['mouseover', 'touchstart'],
-  hideEvents: ['mouseout'],
+  featurePrefix: '',
+  featureShowBindings: ['mouseover', 'touchstart'],
+  featureHideBindings: ['mouseout'],
+  showBindings: [],
+  hideBindings: [],
 };
 
 export class D3Tip extends monte.Extension {
@@ -19,18 +19,15 @@ export class D3Tip extends monte.Extension {
 
     // Throw option error if `featurePrefix` is left blank
     if (!this.opts.featurePrefix) {
-      throw monte.MonteOptionError.RequiredOption('featurePrefix');
+      throw monte.MonteOptionError.RequiredOption('featurePrefix', 'If you wish to listen directly to chart events use: "chart"');
     }
   }
 
   _render() {
-    const featurePrefix = this.tryInvoke(this.option('featurePrefix'));
     const css = this.tryInvoke(this.option('css'));
     const dir = this.tryInvoke(this.option('direction'));
     const html = this.option('html'); // Should always be a function.
     const offset = this.tryInvoke(this.option('offset'));
-    const showEvents = this.tryInvoke(this.option('showEvents'));
-    const hideEvents = this.tryInvoke(this.option('hideEvents'));
     const tip = d3.tip().attr('class', css)
       .direction(dir)
       .html(html);
@@ -53,18 +50,49 @@ export class D3Tip extends monte.Extension {
       throw new monte.MonteOptionError(`Check the "offset" option value. A function, object, or number is expected. Received: ${offset}`);
     }
 
+    // Create D3 Tip instance and associate with chart.
     this.chart.bound.call(tip);
 
-    showEvents.forEach((ev) => this.chart.on(`${featurePrefix}:${ev}`, tip.show));
-    hideEvents.forEach((ev) => this.chart.on(`${featurePrefix}:${ev}`, tip.hide));
-
     this.tip = tip;
+    this._bindTipEvents();
+  }
+
+  _bindTipEvents() {
+    const tip = this.tip;
+    const featureShowBindings = this.tryInvoke(this.option('featureShowBindings'));
+    const featureHideBindings = this.tryInvoke(this.option('featureHideBindings'));
+    const showBindings = this.tryInvoke(this.option('showBindings'));
+    const hideBindings = this.tryInvoke(this.option('hideBindings'));
+
+    let featurePrefix = this.tryInvoke(this.option('featurePrefix'));
+    if (!isArray(featurePrefix)) { featurePrefix = [featurePrefix]; }
+
+    featurePrefix.forEach((fp) => {
+      featureShowBindings.forEach((ev) => this.chart.on(eventName(fp, ev), tip.show));
+      featureHideBindings.forEach((ev) => this.chart.on(eventName(fp, ev), tip.hide));
+    });
+
+    showBindings.forEach((ev) => this.chart.on(ev, tip.show));
+    hideBindings.forEach((ev) => this.chart.on(ev, tip.hide));
   }
 
   // Implemented to indicate that this extension intentionally does not respond to `updated` events.
+  // D3 Tip handles it's own show and hide events and renders itself.
   _update() {}
 
   _destroy() {
     this.tip.destroy();
   }
+
+  showTip(data, target) {
+    this.tip.show(data, target);
+  }
+
+  hideTip() {
+    this.tip.hide();
+  }
+}
+
+function eventName(featurePrefix, ev) {
+  return monte.Extension.featureEventName(featurePrefix, ev);
 }
